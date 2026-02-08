@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Francisco Pérez - Jiu-Jitsu</title>
+    <link rel="icon" type="image/png" href="logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@400;600&display=swap" rel="stylesheet">
@@ -48,6 +49,18 @@
         }
 
         .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+
+        .logo-text {
             font-size: 1rem;
             font-family: 'Lato', sans-serif;
             color: var(--text-color);
@@ -285,7 +298,10 @@
 <body>
     <header>
         <div class="container">
-            <div class="logo">@franciscoperezbjj</div>
+            <div class="logo">
+                <img src="logo.png" alt="Logo" class="logo-img">
+                <span class="logo-text">@franciscoperezbjj</span>
+            </div>
         </div>
     </header>
 
@@ -303,7 +319,7 @@
                 </p>
 
                 <div class="cta-buttons">
-                    <a href="mailto:franciscoperezbjj@gmail.com" class="btn btn-primary">Contactar</a>
+                    <a href="/cdn-cgi/l/email-protection#8bedf9eae5e8e2f8e8e4fbeef9eef1e9e1e1cbece6eae2e7a5e8e4e6" class="btn btn-primary">Contactar</a>
                     <a href="https://franciscoperezbjj.myshopify.com/" class="btn btn-secondary">Ver Contenido</a>
                 </div>
             </div>
@@ -316,10 +332,5 @@
             <div class="social-links">
                 <a href="https://www.instagram.com/franciscoperezbjj">Instagram</a>
                 <a href="https://www.youtube.com/@franciscoperezbjj">YouTube</a>
-                <a href="mailto:franciscoperezbjj@gmail.com">Email</a>
-            </div>
-            <p>&copy; 2026 Francisco Pérez BJJ</p>
-        </div>
-    </footer>
-</body>
-</html>
+                <a href="/cdn-cgi/l/email-protection#eb8d998a8588829888849b8e998e91898181ab8c868a8287c5888486">Email</a>
+            </di
