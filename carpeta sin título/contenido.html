@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contenido - Francisco Pérez BJJ</title>
+    <link rel="icon" type="image/png" href="/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-color: #FAFAF8;
+            --icon-color: #B45532;
+            --text-color: #0F0F0F;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        h1, h2 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header */
+        header {
+            padding: 3rem 0 2rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+        }
+
+        .logo-img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-size: 1rem;
+            font-family: 'Lato', sans-serif;
+            color: var(--text-color);
+            font-weight: 400;
+            letter-spacing: 0.02em;
+        }
+
+        /* Main Content */
+        main {
+            padding: 4rem 0;
+        }
+
+        .page-title {
+            font-size: clamp(2.5rem, 6vw, 3.5rem);
+            margin-bottom: 1rem;
+        }
+
+        .page-subtitle {
+            font-size: 1.125rem;
+            color: #666;
+            margin-bottom: 4rem;
+        }
+
+        /* Content List */
+        .content-list {
+            list-style: none;
+        }
+
+        .content-item {
+            padding: 2rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+            transition: opacity 0.2s ease;
+        }
+
+        .content-item:hover {
+            opacity: 0.8;
+        }
+
+        .content-info {
+            flex: 1;
+        }
+
+        .content-title {
+            font-size: 1.5rem;
+            font-family: 'Playfair Display', serif;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+
+        .content-description {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .content-meta {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .content-price {
+            font-size: 1.75rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: var(--text-color);
+            white-space: nowrap;
+        }
+
+        .btn-buy {
+            padding: 0.875rem 2rem;
+            background: var(--text-color);
+            color: var(--bg-color);
+            border: none;
+            border-radius: 2px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+        }
+
+        .btn-buy:hover {
+            opacity: 0.85;
+        }
+
+        .btn-add-to-cart {
+            padding: 0.875rem 2rem;
+            background: transparent;
+            color: var(--text-color);
+            border: 1px solid var(--text-color);
+            border-radius: 2px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            display: inline-block;
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+        }
+
+        .btn-add-to-cart:hover {
+            background: var(--text-color);
+            color: var(--bg-color);
+        }
+
+        /* Cart Badge */
+        .cart-indicator {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--text-color);
+            color: var(--bg-color);
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            display: none;
+            align-items: center;
+            gap: 0.75rem;
+            z-index: 100;
+        }
+
+        .cart-indicator.active {
+            display: flex;
+        }
+
+        .cart-indicator:hover {
+            transform: translateY(-2px);
+        }
+
+        .cart-count {
+            background: var(--icon-color);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            padding: 3rem 0 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            margin-top: 4rem;
+        }
+
+        .back-link {
+            color: #999;
+            text-decoration: none;
+            font-size: 0.875rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--text-color);
+        }
+
+        footer p {
+            color: #ccc;
+            font-size: 0.8rem;
+            letter-spacing: 0.02em;
+            margin-top: 1.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+
+            header {
+                padding: 2rem 0 1.5rem;
+            }
+
+            main {
+                padding: 3rem 0;
+            }
+
+            .page-title {
+                margin-bottom: 0.75rem;
+            }
+
+            .page-subtitle {
+                margin-bottom: 3rem;
+            }
+
+            .content-item {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 1.5rem 0;
+            }
+
+            .content-meta {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .content-price {
+                font-size: 1.5rem;
+            }
+
+            .btn-buy {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .modal-content {
+                padding: 1.5rem;
+                margin: 1rem;
+            }
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 15, 15, 0.6);
+            z-index: 1000;
+            padding: 1rem;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--bg-color);
+            padding: 2rem;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.2s ease;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            color: var(--text-color);
+        }
+
+        .modal h2 {
+            font-size: 1.75rem;
+            margin-bottom: 2rem;
+            padding-right: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d0d0d0;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-family: 'Lato', sans-serif;
+            transition: border-color 0.2s ease;
+            background: var(--bg-color);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--text-color);
+        }
+
+        .order-summary {
+            background: transparent;
+            padding: 0;
+            border-top: 1px solid #e0e0e0;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 1.5rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .order-summary h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            color: #5a5a5a;
+            font-size: 0.95rem;
+            padding: 0.5rem 0;
+        }
+
+        .order-item-info {
+            flex: 1;
+        }
+
+        .order-item-remove {
+            margin-left: 1rem;
+            color: #999;
+            cursor: pointer;
+            font-size: 0.875rem;
+            transition: color 0.2s ease;
+        }
+
+        .order-item-remove:hover {
+            color: var(--icon-color);
+        }
+
+        .order-total {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+            font-size: 1.25rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e0e0e0;
+            margin-top: 1rem;
+        }
+
+        .paypal-button-container {
+            margin-top: 1.5rem;
+        }
+
+        .success-message {
+            display: none;
+            background: transparent;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+            padding: 1.25rem;
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        .success-message.active {
+            display: block;
+        }
+
+        /* Entrance animation */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .content-item {
+            animation: fadeInUp 0.5s ease-out forwards;
+        }
+
+        .content-item:nth-child(1) { animation-delay: 0.1s; }
+        .content-item:nth-child(2) { animation-delay: 0.2s; }
+        .content-item:nth-child(3) { animation-delay: 0.3s; }
+        .content-item:nth-child(4) { animation-delay: 0.4s; }
+        .content-item:nth-child(5) { animation-delay: 0.5s; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <a href="/" class="logo">
+                <img src="/logo.png" alt="Logo" class="logo-img">
+                <span class="logo-text">@franciscoperezbjj</span>
+            </a>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <h1 class="page-title">Contenido Digital</h1>
+            <p class="page-subtitle">Guías técnicas en formato PDF. Descarga inmediata.</p>
+
+            <ul class="content-list">
+                <li class="content-item">
+                    <div class="content-info">
+                        <h2 class="content-title">Fundamentos de Control</h2>
+                        <p class="content-description">
+                            Domina las posiciones de control: cien kilos, montada, espalda y control lateral.
+                        </p>
+                    </div>
+                    <div class="content-meta">
+                        <span class="content-price">$19.99</span>
+                        <button class="btn-add-to-cart" onclick="addToCart('Fundamentos de Control', 19.99, 'fundamentos-control.pdf')">Agregar</button>
+                    </div>
+                </li>
+
+                <li class="content-item">
+                    <div class="content-info">
+                        <h2 class="content-title">Pasaje de Guardia Avanzado</h2>
+                        <p class="content-description">
+                            Técnicas y estrategias para pasar cualquier tipo de guardia moderna.
+                        </p>
+                    </div>
+                    <div class="content-meta">
+                        <span class="content-price">$24.99</span>
+                        <button class="btn-add-to-cart" onclick="addToCart('Pasaje de Guardia Avanzado', 24.99, 'pasaje-guardia.pdf')">Agregar</button>
+                    </div>
+                </li>
+
+                <li class="content-item">
+                    <div class="content-info">
+                        <h2 class="content-title">Finalizaciones Efectivas</h2>
+                        <p class="content-description">
+                            Catálogo completo de submissions desde todas las posiciones principales.
+                        </p>
+                    </div>
+                    <div class="content-meta">
+                        <span class="content-price">$22.99</span>
+                        <button class="btn-add-to-cart" onclick="addToCart('Finalizaciones Efectivas', 22.99, 'finalizaciones.pdf')">Agregar</button>
+                    </div>
+                </li>
+
+                <li class="content-item">
+                    <div class="content-info">
+                        <h2 class="content-title">Sistema de Defensa y Escape</h2>
+                        <p class="content-description">
+                            Aprende a defenderte y escapar de posiciones comprometidas eficientemente.
+                        </p>
+                    </div>
+                    <div class="content-meta">
+                        <span class="content-price">$18.99</span>
+                        <button class="btn-add-to-cart" onclick="addToCart('Sistema de Defensa y Escape', 18.99, 'defensa-escape.pdf')">Agregar</button>
+                    </div>
+                </li>
+
+                <li class="content-item">
+                    <div class="content-info">
+                        <h2 class="content-title">Pack Completo</h2>
+                        <p class="content-description">
+                            Todos los PDFs en un solo paquete. La biblioteca completa con descuento especial.
+                        </p>
+                    </div>
+                    <div class="content-meta">
+                        <span class="content-price">$69.99</span>
+                        <button class="btn-add-to-cart" onclick="addToCart('Pack Completo', 69.99, 'pack-completo.zip')">Agregar</button>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </main>
+
+    <!-- Cart Indicator -->
+    <div class="cart-indicator" id="cartIndicator" onclick="openCart()">
+        <span>Carrito</span>
+        <span class="cart-count" id="cartCount">0</span>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div class="modal" id="checkoutModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeCheckout()">&times;</button>
+            <h2>Finalizar Compra</h2>
+            
+            <div class="order-summary">
+                <h3>Resumen del Pedido</h3>
+                <div id="cartItems"></div>
+                <div class="order-total">
+                    <span>Total</span>
+                    <span id="orderTotal">$0.00</span>
+                </div>
+            </div>
+
+            <form id="checkoutForm">
+                <div class="form-group">
+                    <label for="customerName">Nombre Completo</label>
+                    <input type="text" id="customerName" name="customerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerEmail">Correo Electrónico</label>
+                    <input type="email" id="customerEmail" name="customerEmail" required placeholder="tu@email.com">
+                </div>
+
+                <!-- PayPal Button Container -->
+                <div id="paypal-button-container" class="paypal-button-container"></div>
+            </form>
+
+            <div class="success-message" id="successMessage">
+                <h3>¡Compra Exitosa!</h3>
+                <p>El PDF ha sido enviado a tu correo electrónico. Revisa tu bandeja de entrada.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <a href="/" class="back-link">← Volver al inicio</a>
+            <p>&copy; 2026 Francisco Pérez BJJ</p>
+        </div>
+    </footer>
+
+    <!-- PayPal SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=Ae9x7gV0nD-WHU0oOFHO74j3ttGmp_mkl1f0jdbcNi86Axr82OnwXW79Il8VPdwAEVgu3s5WIB_DiPhO&currency=USD"></script>
+
+    <script>
+        // Cart management
+        let cart = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartDisplay();
+        });
+
+        function addToCart(productName, price, fileName) {
+            // Check if product already in cart
+            const existingItem = cart.find(item => item.file === fileName);
+            
+            if (existingItem) {
+                alert('Este producto ya está en tu carrito');
+                return;
+            }
+
+            cart.push({
+                name: productName,
+                price: price,
+                file: fileName
+            });
+
+            updateCartDisplay();
+            
+            // Show confirmation
+            const btn = event.target;
+            const originalText = btn.textContent;
+            btn.textContent = '✓ Agregado';
+            btn.style.background = 'var(--text-color)';
+            btn.style.color = 'var(--bg-color)';
+            
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = '';
+                btn.style.color = '';
+            }, 1500);
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartDisplay();
+            updateModalCart();
+        }
+
+        function updateCartDisplay() {
+            const cartIndicator = document.getElementById('cartIndicator');
+            const cartCount = document.getElementById('cartCount');
+            
+            if (cart.length > 0) {
+                cartIndicator.classList.add('active');
+                cartCount.textContent = cart.length;
+            } else {
+                cartIndicator.classList.remove('active');
+            }
+        }
+
+        function openCart() {
+            if (cart.length === 0) {
+                alert('Tu carrito está vacío');
+                return;
+            }
+
+            updateModalCart();
+            document.getElementById('checkoutModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            initPayPalButtons();
+        }
+
+        function updateModalCart() {
+            const cartItemsContainer = document.getElementById('cartItems');
+            const orderTotal = document.getElementById('orderTotal');
+            
+            // Clear previous items
+            cartItemsContainer.innerHTML = '';
+            
+            // Calculate total
+            let total = 0;
+            
+            // Add each item
+            cart.forEach((item, index) => {
+                total += item.price;
+                
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'order-item';
+                itemDiv.innerHTML = `
+                    <div class="order-item-info">
+                        <div>${item.name}</div>
+                        <div style="font-size: 0.875rem; color: #999;">$${item.price.toFixed(2)}</div>
+                    </div>
+                    <span class="order-item-remove" onclick="removeFromCart(${index})">Eliminar</span>
+                `;
+                cartItemsContainer.appendChild(itemDiv);
+            });
+            
+            orderTotal.textContent = `$${total.toFixed(2)}`;
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkoutModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+            document.getElementById('successMessage').classList.remove('active');
+            document.getElementById('checkoutForm').reset();
+        }
+
+        function initPayPalButtons() {
+            // Clear previous buttons
+            document.getElementById('paypal-button-container').innerHTML = '';
+
+            // Check if PayPal is loaded
+            if (typeof paypal === 'undefined') {
+                document.getElementById('paypal-button-container').innerHTML = '<p style="color: #999; text-align: center;">Cargando PayPal...</p>';
+                return;
+            }
+
+            // Calculate total
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+
+            paypal.Buttons({
+                createOrder: function(data, actions) {
+                    const name = document.getElementById('customerName').value;
+                    const email = document.getElementById('customerEmail').value;
+
+                    if (!name || !email) {
+                        alert('Por favor completa todos los campos');
+                        return;
+                    }
+
+                    return actions.order.create({
+                        purchase_units: [{
+                            description: `${cart.length} producto${cart.length > 1 ? 's' : ''} digitales`,
+                            amount: {
+                                value: total.toFixed(2)
+                            }
+                        }]
+                    });
+                },
+                onApprove: function(data, actions) {
+                    return actions.order.capture().then(function(details) {
+                        console.log('Payment completed by ' + details.payer.name.given_name);
+                        
+                        // Send to backend
+                        sendPurchaseToServer(details);
+                        
+                        // Show success message
+                        document.getElementById('checkoutForm').style.display = 'none';
+                        document.getElementById('successMessage').classList.add('active');
+                        
+                        // Clear cart
+                        setTimeout(() => {
+                            cart = [];
+                            updateCartDisplay();
+                            closeCheckout();
+                            document.getElementById('checkoutForm').style.display = 'block';
+                        }, 3000);
+                    });
+                },
+                onError: function(err) {
+                    console.error('PayPal error:', err);
+                    alert('Hubo un error procesando el pago. Por favor intenta nuevamente.');
+                }
+            }).render('#paypal-button-container');
+        }
+
+        function sendPurchaseToServer(paymentDetails) {
+            const purchaseData = {
+                products: cart,
+                totalPrice: cart.reduce((sum, item) => sum + item.price, 0),
+                customerName: document.getElementById('customerName').value,
+                customerEmail: document.getElementById('customerEmail').value,
+                paymentId: paymentDetails.id,
+                payerId: paymentDetails.payer.payer_id,
+                status: paymentDetails.status
+            };
+
+            console.log('Sending purchase data to server:', purchaseData);
+            
+            // Enviar al backend (cuando lo tengas configurado)
+            /*
+            fetch('http://localhost:3000/api/process-purchase', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(purchaseData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Server response:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+            */
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('checkoutModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCheckout();
+            }
+        });
+    </script>
+</body>
+</html>
